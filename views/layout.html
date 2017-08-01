@@ -8,8 +8,8 @@
         <h1>Acme Users</h1>
         <ul class='nav nav-tabs'>
           <li {% if nav=='/' %}class='active'{% endif %}><a href='/'>Home</a></li>
-          <li {% if nav=='/users' %}class='active'{% endif %}><a href='/users'>Users ({{ users.length }})</a></li>
-          <li {% if nav=='/users/managers' %}class='active'{% endif %}><a href='/users/managers'>Managers ({{ managers.length }})</a></li>
+          <li {% if nav=='/users' %}class='active'{% endif %}><a href='/users'>Users ({{ userCount }})</a></li>
+          <li {% if nav=='/users/managers' %}class='active'{% endif %}><a href='/users/managers'>Managers ({{ managerCount }})</a></li>
         </ul>
         {% block content %}
         {% endblock %}

@@ -24,8 +24,9 @@ app.use(function(err, req, res, next) {
   res.render('error', { err: err });
 });
 
-app.get('/',function(req,res, next) {
-  res.render('index', { nav: req.url });
+app.get('/',function(req, res, next) {
+  console.log(db.count(false), db.count(true))
+  res.render('index', { nav: req.url, userCount: +db.count(false), managerCount: +db.count(true) });
 });
 
 

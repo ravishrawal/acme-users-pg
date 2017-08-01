@@ -78,6 +78,16 @@ function seed(cb) {
   })
 }
 
+function count(bool) {
+    query('SELECT COUNT(*) FROM users WHERE isManager = $1', [ bool ], function(err, result) {
+      if(err){
+        return console.log(err.message);
+      }
+      console.log(result.rows[0].count);
+      return result.rows[0].count;
+    });
+}
+
 
 module.exports = {
   sync,
@@ -85,5 +95,6 @@ module.exports = {
   createUser,
   getUsers,
   deleteUser,
-  promote
+  promote,
+  count
 }
