@@ -1,0 +1,12 @@
+{% extends './layout.html' %}
+
+{% block content %}
+  <h1> Managers </h1>
+  <div class='well'>
+    <ul>
+      {% for manager in managers %}
+      <li> {{ manager.name }} </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

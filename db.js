@@ -24,7 +24,7 @@ function query(sql, params, cb) {
 }
 
 function createUser(user, cb) {
-  query('INSERT INTO users (name) values ($1) RETURNING id', [ user.name ], function(err, result) {    //$ sign makes it refer to 2nd arg
+  query('INSERT INTO users (name, isManager) values ($1, $2) RETURNING id', [ user.name, user.isManager ], function(err, result) {    //$ sign makes it refer to 2nd arg
     if(err){
       return cb(err);
     }
@@ -32,13 +32,22 @@ function createUser(user, cb) {
   });
 }
 
-function getUsers(cb) {
-  query('SELECT * FROM users', null, function(err, result) {
-    if(err){
-      return cb(err);
-    }
-    cb(null, result.rows);
-  });
+function getUsers(managersOnly, cb) {
+  if(managersOnly===true){
+    query('SELECT * FROM users WHERE isManager = $1', [ true ], function(err, result) {
+      if(err){
+        return cb(err);
+      }
+      cb(null, result.rows);
+    });
+  } else {
+    query('SELECT * FROM users', null, function(err, result) {
+      if(err){
+        return cb(err);
+      }
+      cb(null, result.rows);
+    });
+  }
 }
 
 function deleteUser(id, cb) {
@@ -51,7 +60,7 @@ function deleteUser(id, cb) {
 }
 
 function seed(cb) {
-  createUser({name: 'foo', isManager: false}, function(err, id) {
+  createUser({name: 'Brother Bear', isManager: true}, function(err, id) {
     if(err){
       return cb(err);
     }
@@ -59,6 +68,7 @@ function seed(cb) {
     cb(null);
   })
 }
+
 
 module.exports = {
   sync,

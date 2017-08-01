@@ -1,0 +1,23 @@
+{% extends './layout.html' %}
+
+{% block content %}
+  <h2> Users </h2>
+  <div class = 'well'>
+    <ul class = 'list-group'>
+      {% for user in users %}
+      <li class = 'list-group-item'> {{ user.name }}
+      {% if user.ismanager %}
+      <label class = 'label label-primary'>Manager</label>
+      {% else %}
+      <form method = 'PUT' action = '/users/:id'>
+        <button class = 'btn btn-success btn-block'>Promote!</button>
+      </form>
+      <form method = 'DELETE' action = '/users/:id'>
+        <button class = 'btn btn-danger btn-block'>Delete</button>
+      </form>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
