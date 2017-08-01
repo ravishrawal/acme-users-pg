@@ -30,4 +30,23 @@ router.post('/users', function(req, res, next) {
     }
     res.redirect('/users');
   });
-})
+});
+
+router.put('/users/:id', function(req, res, next) {
+  db.promote(req.params.id, function(err) {
+    if(err){
+      return next(err);
+    }
+    res.redirect('/users');
+  });
+});
+
+router.delete('/users/:id', function(req, res, next) {
+  console.log(req.params.id);
+  db.deleteUser(req.params.id, function(err) {
+    if(err){
+      next(err);
+    }
+    res.redirect('/users'); 
+  });
+});

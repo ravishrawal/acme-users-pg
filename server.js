@@ -11,7 +11,7 @@ var routes = require('./routes/users.js');
 
 app.use('/vendor', express.static(path.join(__dirname,'node_modules')));
 app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('method-override')('_method'));   //looks in POST for things like ?_method=DELETE
+app.use(require('method-override')('_method'));   //looks in action for POST for things like ?_method=DELETE
 
 app.use('/',function(req,res,next) {
   console.log(req.url);
@@ -19,6 +19,10 @@ app.use('/',function(req,res,next) {
 });
 
 app.use('/', routes);
+
+app.use(function(err, req, res, next) {
+  res.render('error', { err: err });
+});
 
 app.get('/',function(req,res, next) {
   res.render('index', { nav: req.url });

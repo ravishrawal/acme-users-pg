@@ -59,6 +59,15 @@ function deleteUser(id, cb) {
   })
 }
 
+function promote(id, cb) {
+  query('UPDATE users SET isManager = true WHERE id = $1', [ id ], function(err, result) {
+    if(err){
+      return cb(err);
+    }
+    cb(null, result.rows);
+  });
+}
+
 function seed(cb) {
   createUser({name: 'Brother Bear', isManager: true}, function(err, id) {
     if(err){
@@ -75,5 +84,6 @@ module.exports = {
   seed,
   createUser,
   getUsers,
-  deleteUser
+  deleteUser,
+  promote
 }
